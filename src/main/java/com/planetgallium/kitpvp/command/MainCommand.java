@@ -5,7 +5,7 @@ import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.api.Kit;
 import com.planetgallium.kitpvp.game.Arena;
 import com.planetgallium.kitpvp.util.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

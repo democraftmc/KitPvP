@@ -2,7 +2,7 @@ package com.planetgallium.kitpvp.util;
 
 import com.planetgallium.database.TopEntry;
 import com.planetgallium.kitpvp.Game;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import com.planetgallium.kitpvp.game.Arena;
 

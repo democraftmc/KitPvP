@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.planetgallium.kitpvp.util.Toolkit;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;

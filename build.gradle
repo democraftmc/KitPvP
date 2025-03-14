@@ -7,7 +7,9 @@ group = 'com.planetgallium'
 version = '2.2.2'
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)  // Assurez-vous d'utiliser la bonne version
+    }
 }
 
 repositories {
@@ -19,7 +21,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT'
-    compileOnly 'me.clip:placeholderapi:2.11.0'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly('com.sk89q.worldguard:worldguard-bukkit:7.0.0') {
         exclude group: 'org.bstats', module: 'bstats-bukkit'
     }
@@ -29,13 +31,14 @@ dependencies {
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'mysql:mysql-connector-java:5.1.44'
     compileOnly 'org.xerial:sqlite-jdbc:3.36.0.3'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-shadowJar {
+tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
     relocate 'com.cryptomorin.xseries', 'com.planetgallium.kitpvp'
     relocate 'com.mysql', 'com.planetgallium.sql'
     exclude 'com/cryptomorin/xseries/messages/ActionBar*'
@@ -49,4 +52,16 @@ shadowJar {
     exclude 'com/cryptomorin/xseries/XItemStack*'
     exclude 'com/cryptomorin/xseries/XTag*'
     exclude 'com/cryptomorin/xseries/XWorldBorder*'
+}
+
+def devOutputDir = '/Users/nico/Developer/Spigot/Latest/plugins/'
+
+tasks.register('copyToDev', Copy) {
+    dependsOn tasks.named('shadowJar')
+    from tasks.named('shadowJar').get().archiveFile
+    into devOutputDir
+}
+
+tasks.named('build') {
+    finalizedBy tasks.named('copyToDev')
 }
