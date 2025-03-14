@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.planetgallium'
+version = '2.2.2'
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://maven.enginehub.org/repo/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.11.0'
+    compileOnly('com.sk89q.worldguard:worldguard-bukkit:7.0.0') {
+        exclude group: 'org.bstats', module: 'bstats-bukkit'
+    }
+    compileOnly 'com.sk89q.worldguard:worldguard-legacy:6.2'
+    implementation 'com.github.cryptomorin:XSeries:11.2.1'
+    compileOnly 'com.googlecode.json-simple:json-simple:1.1.1'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'mysql:mysql-connector-java:5.1.44'
+    compileOnly 'org.xerial:sqlite-jdbc:3.36.0.3'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+shadowJar {
+    relocate 'com.cryptomorin.xseries', 'com.planetgallium.kitpvp'
+    relocate 'com.mysql', 'com.planetgallium.sql'
+    exclude 'com/cryptomorin/xseries/messages/ActionBar*'
+    exclude 'com/cryptomorin/xseries/particles/*'
+    exclude 'com/cryptomorin/xseries/NMSExtras*'
+    exclude 'com/cryptomorin/xseries/NoteBlockMusic*'
+    exclude 'com/cryptomorin/xseries/SkullUtils*'
+    exclude 'com/cryptomorin/xseries/XBiome*'
+    exclude 'com/cryptomorin/xseries/XBlock*'
+    exclude 'com/cryptomorin/xseries/XEntity*'
+    exclude 'com/cryptomorin/xseries/XItemStack*'
+    exclude 'com/cryptomorin/xseries/XTag*'
+    exclude 'com/cryptomorin/xseries/XWorldBorder*'
+}
