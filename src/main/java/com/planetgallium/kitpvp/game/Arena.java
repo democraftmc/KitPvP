@@ -7,6 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -51,7 +54,7 @@ public class Arena {
 		this.cooldowns = new Cooldowns(plugin, this);
 		this.menus = new Menus(resources);
 	}
-	
+
 	public void addPlayer(Player p, boolean toSpawn, boolean giveItems) {
 		cooldowns.clearPlayerAbilityCooldowns(p.getName());
 

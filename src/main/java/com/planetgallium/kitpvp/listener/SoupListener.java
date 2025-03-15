@@ -52,8 +52,6 @@ public class SoupListener implements Listener {
 	private void insertSoupRewardToInventory(Player killer) {
 		for (int i = config.getInt("Kill.SoupReward.Amount"); i > 0; i--) {
 			if (killer.getInventory().firstEmpty() == -1) {
-				killer.sendMessage(config.fetchString("Kill.SoupReward.NoSpace")
-						.replace("%amount%", String.valueOf(i)));
 				break;
 			} else {
 				killer.getInventory().addItem(buildSoup());
