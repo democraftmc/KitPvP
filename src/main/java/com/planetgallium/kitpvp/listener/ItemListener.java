@@ -44,7 +44,7 @@ public class ItemListener implements Listener {
 	private final Resources resources;
 	private final Resource config;
 	private final Resource abilities;
-	
+
 	public ItemListener(Game plugin) {
 		this.plugin = plugin;
 		this.arena = plugin.getArena();
@@ -89,7 +89,7 @@ public class ItemListener implements Listener {
 
 			} else if ((Toolkit.hasMatchingMaterial(interactedItem, "SLIME_BALL") ||
 					Toolkit.hasMatchingMaterial(interactedItem, "MAGMA_CREAM"))
-						&& interactedItem.hasItemMeta()) {
+					&& interactedItem.hasItemMeta()) {
 				archerAbility(e, p, interactedItem, interactedItemMeta);
 
 			} else if (Toolkit.hasMatchingMaterial(interactedItem, "TNT")) {
@@ -133,7 +133,7 @@ public class ItemListener implements Listener {
 					}
 				}
 			}
-			
+
 		}
 	}
 
@@ -525,13 +525,13 @@ public class ItemListener implements Listener {
 			return potionStack;
 		}
 	}
-	
+
 	private PotionType randomPotionType() {
 		PotionType potion = null;
-		
+
 		Random ran = new Random();
 		int chance = ran.nextInt(100);
-		
+
 		if (chance < 10) {
 			potion = PotionType.INSTANT_DAMAGE;
 		} else if (chance < 20) {
