@@ -45,7 +45,10 @@ public class KitMenu {
 	public void open(Player p) {
 		this.menu.setResultHandler(response -> {
 			String kit = response.clickedButton().text().substring(4);
-			p.performCommand("kp kit " + kit.substring(0, kit.length() - 4));
+			if (kit.endsWith(" Kit")) {
+				kit = kit.substring(0, kit.length() - 4);
+			}
+			p.performCommand("kp kit " + kit);
 		});
 		menu.openMenu(p);
 	}

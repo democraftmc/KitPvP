@@ -49,6 +49,8 @@ public class Field {
 
     public int getLimit() { return limit; }
 
-    public Object getValue() { return value; }
+    public Object getValue() {
+        return value;
+    }
 
 }
