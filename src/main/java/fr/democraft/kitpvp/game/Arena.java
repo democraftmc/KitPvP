@@ -2,7 +2,7 @@ package fr.democraft.kitpvp.game;
 
 import java.util.*;
 
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.CacheManager;
 import fr.democraft.kitpvp.util.Resource;
 import fr.democraft.kitpvp.util.Resources;
