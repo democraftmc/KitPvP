@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'com.planetgallium'
+group = 'fr.democraft'
 version = '2.2.2'
 
 java {
@@ -56,7 +56,7 @@ tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.Shadow
     exclude 'com/cryptomorin/xseries/XWorldBorder*'
 }
 
-def devOutputDir = '/Users/nico/Developer/Spigot/Latest/plugins/'
+def devOutputDir = './output/'
 
 tasks.register('copyToDev', Copy) {
     dependsOn tasks.named('shadowJar')
