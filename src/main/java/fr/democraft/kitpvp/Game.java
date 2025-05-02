@@ -21,10 +21,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fr.democraft.kitpvp.api.EventListener;
-import com.planetgallium.kitpvp.command.*;
+import fr.democraft.kitpvp.command.*;
 import fr.democraft.kitpvp.game.Arena;
-import com.planetgallium.kitpvp.listener.*;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.listener.*;
+import fr.democraft.kitpvp.util.*;
 
 public class Game extends JavaPlugin implements Listener {
 	

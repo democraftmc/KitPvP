@@ -1,7 +1,7 @@
 package fr.democraft.kitpvp.listener;
 
 import com.cryptomorin.xseries.messages.Titles;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.CacheManager;
 import fr.democraft.kitpvp.util.Resource;
 import fr.democraft.kitpvp.util.Resources;

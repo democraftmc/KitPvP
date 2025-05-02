@@ -1,5 +1,4 @@
 # Ignore Gradle project-specific cache directory
-.gradle/*
 *.iml
 *.ipr
 *.iws
@@ -7,5 +6,6 @@
 Desktop.ini
 
 # Ignore Gradle build output directory
-build/*
-.gradle/
+build
+.gradle
+output

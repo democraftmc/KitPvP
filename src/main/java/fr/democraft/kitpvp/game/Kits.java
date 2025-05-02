@@ -8,7 +8,7 @@ import fr.democraft.kitpvp.api.Ability;
 import fr.democraft.kitpvp.api.Kit;
 import fr.democraft.kitpvp.api.PlayerSelectKitEvent;
 import fr.democraft.kitpvp.item.AttributeParser;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

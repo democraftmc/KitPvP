@@ -3,7 +3,7 @@ package fr.democraft.kitpvp.game;
 import java.util.HashMap;
 
 import com.cryptomorin.xseries.messages.Titles;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.Resource;
 import fr.democraft.kitpvp.util.Resources;
 import fr.democraft.kitpvp.util.Toolkit;

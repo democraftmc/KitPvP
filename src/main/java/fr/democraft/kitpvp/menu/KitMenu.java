@@ -1,6 +1,6 @@
 package fr.democraft.kitpvp.menu;
 
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.Menu;
 import fr.democraft.kitpvp.util.Resources;
 import fr.democraft.kitpvp.util.Toolkit;

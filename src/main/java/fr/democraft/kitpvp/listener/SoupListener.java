@@ -1,6 +1,6 @@
 package fr.democraft.kitpvp.listener;
 
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.Resource;
 import fr.democraft.kitpvp.util.Toolkit;
 import org.bukkit.entity.Player;

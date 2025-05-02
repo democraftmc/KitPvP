@@ -1,10 +1,10 @@
 package fr.democraft.kitpvp.game;
 
-import com.planetgallium.database.*;
+import fr.democraft.database.*;
 import fr.democraft.database.*;
 import fr.democraft.database.Record;
 import fr.democraft.kitpvp.Game;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;

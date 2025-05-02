@@ -3,7 +3,7 @@ package fr.democraft.kitpvp.game;
 import fr.democraft.database.TopEntry;
 import fr.democraft.kitpvp.Game;
 import fr.democraft.kitpvp.api.PlayerLevelUpEvent;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

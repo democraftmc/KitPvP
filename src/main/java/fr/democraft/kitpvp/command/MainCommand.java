@@ -3,7 +3,7 @@ package fr.democraft.kitpvp.command;
 import fr.democraft.kitpvp.Game;
 import fr.democraft.kitpvp.api.Kit;
 import fr.democraft.kitpvp.game.Arena;
-import com.planetgallium.kitpvp.util.*;
+import fr.democraft.kitpvp.util.*;
 import fr.democraft.kitpvp.util.CacheManager;
 import fr.democraft.kitpvp.util.Resource;
 import fr.democraft.kitpvp.util.Resources;
