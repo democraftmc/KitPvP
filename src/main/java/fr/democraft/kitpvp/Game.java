@@ -5,7 +5,10 @@ import fr.democraft.kitpvp.command.MainCommand;
 import fr.democraft.kitpvp.game.Infobase;
 import fr.democraft.kitpvp.listener.*;
 import fr.democraft.kitpvp.util.*;
+
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,6 +74,10 @@ public class Game extends JavaPlugin implements Listener {
 	    getCommand("kitpvp").setExecutor(new MainCommand(this));
 		
 		new Metrics(this);
+
+		for (World world : Bukkit.getWorlds()) {
+			boolean result = world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+		}
 		
 		new BukkitRunnable() {
 			@Override
