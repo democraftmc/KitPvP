@@ -91,6 +91,7 @@ public class Arena {
 
 		if (giveItems) {
 			giveArenaItems(p);
+			p.getInventory().setHeldItemSlot(0);
 		}
 
 		if (toSpawn) {
