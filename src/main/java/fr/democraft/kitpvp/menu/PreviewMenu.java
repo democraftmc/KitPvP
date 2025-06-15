@@ -17,7 +17,9 @@ public class PreviewMenu {
 	private Menu create(Kit kit, Resources resources) {
 		String previewMenuTitle = resources.getMessages().fetchString("Messages.Other.PreviewMenuTitle")
 				.replace("%kit%", kit.getName());
-		Menu previewMenu = new Menu(previewMenuTitle, new PreviewHolder(), 54);
+		String bedrockPreviewMenuTitle = resources.getMessages().fetchString("Messages.Other.PreviewMenuBedrockTitle")
+				.replace("%kit%", kit.getName());
+		Menu previewMenu = new Menu(previewMenuTitle, bedrockPreviewMenuTitle, new PreviewHolder(), 54);
 
 		//			ARMOR			//
 

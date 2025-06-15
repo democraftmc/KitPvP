@@ -15,7 +15,7 @@ public class RefillMenu {
     }
 
     private void create() {
-        this.menu = new Menu("Refill", null, 54);
+        this.menu = new Menu(resources.getMessages().fetchString("Messages.Other.RefillMenuTitle"), resources.getMessages().fetchString("Messages.Other.RefillMenuBedrockTitle"), null, 54);
 
         for (int i = 0; i < menu.getSize(); i++) {
             menu.addItem(resources.getConfig().fetchString("Soups.Name"),

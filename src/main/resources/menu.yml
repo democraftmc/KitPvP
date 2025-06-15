@@ -5,6 +5,7 @@
 Menu:
   General:
     Title: 'Kits'
+    Bedrock-Title: 'Kits'
     Size: 54
   Items:
     10:

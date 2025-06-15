@@ -21,7 +21,7 @@ public class KitMenu {
 	}
 
 	private void create() {
-		this.menu = new Menu(resources.getMenu().fetchString("Menu.General.Title"), new KitHolder(), resources.getMenu().getInt("Menu.General.Size"));
+		this.menu = new Menu(resources.getMenu().fetchString("Menu.General.Title"), resources.getMenu().fetchString("Menu.General.Bedrock-Title"), new KitHolder(), resources.getMenu().getInt("Menu.General.Size"));
 		ConfigurationSection section = resources.getMenu().getConfigurationSection("Menu.Items");
 
 		for (String slot : section.getKeys(false)) {

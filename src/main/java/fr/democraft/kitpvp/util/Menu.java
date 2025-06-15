@@ -20,15 +20,17 @@ import java.util.function.Consumer;
 public class Menu {
 
 	private final String title;
+	private final String bedrockTitle;
 	private final int size;
 	private final Inventory menu;
 	private final InventoryHolder owner;
 	public final SimpleForm.@NonNull Builder form;
 	private final FloodgateApi api = FloodgateApi.getInstance();
 	
-	public Menu(String title, InventoryHolder owner, int size) {
-		this.menu = Bukkit.createInventory(owner, size, Toolkit.translate(title));
-		this.form = SimpleForm.builder().title(Toolkit.translate(title));
+	public Menu(String title, String bedrockTitle, InventoryHolder owner, int size) {
+        this.bedrockTitle = bedrockTitle;
+        this.menu = Bukkit.createInventory(owner, size, Toolkit.translate(title));
+		this.form = SimpleForm.builder().title(Toolkit.translate(bedrockTitle));
 		this.title = title;
 		this.size = size;
 		this.owner = owner;
