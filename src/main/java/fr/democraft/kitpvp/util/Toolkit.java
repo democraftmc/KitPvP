@@ -199,6 +199,17 @@ public class Toolkit {
 		return null;
 	}
 
+    public static Player getPlayer(String name) {
+        for (World world : Bukkit.getWorlds()) {
+            for (Player player : world.getPlayers()) {
+                if (player.getName().equals(name)) {
+                    return player;
+                }
+            }
+        }
+        return null;
+    }
+
 	public static void saveLocationToResource(Resource resource, String path, Location location) {
 		resource.set(path + ".World", location.getWorld().getName());
 		resource.set(path + ".X", location.getBlockX());

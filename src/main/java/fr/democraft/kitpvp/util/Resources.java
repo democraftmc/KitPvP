@@ -16,7 +16,7 @@ public class Resources {
     private final Resource config, abilities, killstreaks,
             levels, menu, scoreboard, signs;
 
-    private final String defaultLang = "en";
+    public final String defaultLang = "en";
 
     public Resources(Game plugin) {
         this.plugin = plugin;
@@ -54,6 +54,31 @@ public class Resources {
             abilityToResource.put("ExampleAbility2.yml", new Resource(plugin, "abilities/ExampleAbility2.yml"));
             abilityToResource.put("SpeedBoost.yml", new Resource(plugin, "abilities/SpeedBoost.yml"));
             abilityToResource.put("Stampede.yml", new Resource(plugin, "abilities/Stampede.yml"));
+
+            // Create message files from resources/messages if not existing
+            File messagesFolder = new File(plugin.getDataFolder(), "messages");
+            if (!messagesFolder.exists()) {
+                messagesFolder.mkdirs();
+            }
+            File resourceMessagesFolder = new File(plugin.getClass().getClassLoader().getResource("messages").getFile());
+            if (resourceMessagesFolder.exists() && resourceMessagesFolder.isDirectory()) {
+                for (String fileName : resourceMessagesFolder.list()) {
+                    File dest = new File(messagesFolder, fileName);
+                    if (!dest.exists()) {
+                        // Copy file from resources to plugin data folder
+                        try (java.io.InputStream in = plugin.getClass().getClassLoader().getResourceAsStream("messages/" + fileName);
+                             java.io.FileOutputStream out = new java.io.FileOutputStream(dest)) {
+                            byte[] buffer = new byte[1024];
+                            int len;
+                            while ((len = in.read(buffer)) > 0) {
+                                out.write(buffer, 0, len);
+                            }
+                        } catch (Exception e) {
+                            Toolkit.printToConsole("&cFailed to copy message file: " + fileName + " - " + e.getMessage());
+                        }
+                    }
+                }
+            }
         }
 
         Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &7Loading kit files...");
@@ -177,21 +202,12 @@ public class Resources {
         return messageResources.get(langId);
     }
 
-    public String getMessage(String langId, String path) {
-        Resource res = messageResources.get(langId);
 
-        // Try given language
-        if (res != null && res.getConfig().isSet(path)) {
-            return res.getConfig().getString(path, "&cMessage not found: " + path);
-        }
+    public Resource getMessages() {
+        return messageResources.get(defaultLang);
+    }
 
-        // Try default language fallback
-        Resource fallback = messageResources.get(defaultLang);
-        if (fallback != null && fallback.getConfig().isSet(path)) {
-            return fallback.getConfig().getString(path, "&cMessage not found: " + path);
-        }
-
-        // Nothing found
-        return "&cMessage not found in any language: " + path;
+    public Resource getMessages(String langId) {
+        return messageResources.get(langId);
     }
 }

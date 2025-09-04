@@ -25,7 +25,6 @@ public class Kits {
     private final Game plugin;
     private final Arena arena;
     private final Resources resources;
-    private final Resource messages;
 
     private final Map<String, String> playerKits;
 
@@ -33,8 +32,6 @@ public class Kits {
         this.arena = arena;
         this.plugin = plugin;
         this.resources = plugin.getResources();
-        this.messages = resources.getMessages();
-
         this.playerKits = new HashMap<>();
     }
 
@@ -82,7 +79,7 @@ public class Kits {
                 menuConfig.load();
                 arena.getMenus().getKitMenu().rebuildCache();
             } else {
-                fromPlayer.sendMessage(messages.fetchString("Messages.Error.Menu"));
+                fromPlayer.sendMessage(resources.getMessages(plugin.getPlayerLanguage(fromPlayer)).fetchString("Messages.Error.Menu"));
             }
         }
     }
@@ -201,32 +198,32 @@ public class Kits {
         Player p = player;
 
         if (kit == null) {
-            p.sendMessage(messages.fetchString("Messages.Error.Lost"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Error.Lost"));
             return;
         }
 
         if (!p.hasPermission(kit.getPermission())) {
-            p.sendMessage(messages.fetchString("Messages.General.Permission")
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.General.Permission")
                     .replace("%permission%", kit.getPermission()));
             return;
         }
 
         if (!(Toolkit.getPermissionAmount(p, "kp.levelbypass.", 0) >= kit.getLevel() ||
                 arena.getStats().getStat("level", p.getName()) >= kit.getLevel())) {
-            p.sendMessage(messages.fetchString("Messages.Other.Needed")
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Other.Needed")
                     .replace("%level%", String.valueOf(kit.getLevel())));
             return;
         }
 
         Cooldown cooldownRemaining = arena.getCooldowns().getRemainingCooldown(p, kit);
         if (!p.hasPermission("kp.cooldownbypass") && cooldownRemaining.toSeconds() > 0) {
-            p.sendMessage(messages.fetchString("Messages.Error.CooldownKit")
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Error.CooldownKit")
                     .replace("%cooldown%", cooldownRemaining.formatted(false)));
             return;
         }
 
         if (playerHasKit(player.getName())) {
-            p.sendMessage(messages.fetchString("Messages.Error.Selected"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Error.Selected"));
             Toolkit.playSoundToPlayer(p, "ENTITY_ENDER_DRAGON_HURT", 1);
             return;
         }
@@ -237,7 +234,7 @@ public class Kits {
         }
 
         kit.apply(p);
-        p.sendMessage(messages.fetchString("Messages.Commands.Kit").replace("%kit%", kit.getName()));
+        p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Commands.Kit").replace("%kit%", kit.getName()));
         Toolkit.playSoundToPlayer(p, "ENTITY_HORSE_ARMOR", 1);
 
         Bukkit.getPluginManager().callEvent(new PlayerSelectKitEvent(player, kit));

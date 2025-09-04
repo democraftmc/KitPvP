@@ -172,13 +172,13 @@ public class ItemListener implements Listener {
 
 			if (p.hasPermission(abilityPermission)) {
 				if (config.getBoolean("Arena.AbilitiesRequireKit") && !arena.getKits().playerHasKit(p.getName())) {
-					p.sendMessage(resources.getMessages().fetchString("Messages.Error.Kit"));
+					p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Error.Kit"));
 					return false;
 				}
 
 				return utilities.isCombatActionPermittedInRegion(p);
 			} else {
-				p.sendMessage(resources.getMessages().fetchString("Messages.General.Permission")
+				p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.General.Permission")
 						.replace("%permission%", abilityPermission));
 			}
 		}
@@ -264,10 +264,10 @@ public class ItemListener implements Listener {
 
 				useBuiltInAbilityItem(e, p, p, abilityItem, "Warper");
 			} else {
-				p.sendMessage(resources.getMessages().fetchString("Messages.Other.Players"));
+				p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Other.Players"));
 			}
 		} else {
-			p.sendMessage(resources.getMessages().fetchString("Messages.Other.Players"));
+			p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Other.Players"));
 		}
 	}
 
@@ -435,7 +435,7 @@ public class ItemListener implements Listener {
 					Location shooterLocation = shooter.getLocation();
 
 					if (!utilities.isCombatActionPermittedInRegion(damagedPlayer)) {
-						shooter.sendMessage(resources.getMessages().fetchString("Messages.Error.PVP"));
+						shooter.sendMessage(resources.getMessages(plugin.getPlayerLanguage(shooter)).fetchString("Messages.Error.PVP"));
 						return;
 					}
 

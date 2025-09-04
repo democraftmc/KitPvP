@@ -9,6 +9,7 @@ import fr.democraft.kitpvp.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,10 +27,14 @@ import fr.democraft.kitpvp.game.Arena;
 import fr.democraft.kitpvp.listener.*;
 import fr.democraft.kitpvp.util.*;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Game extends JavaPlugin implements Listener {
 	
 	private static Game instance;
 	private static String prefix = "None";
+    public static String defaulLang = "en";
 
 	private Arena arena;
 	private Infobase database;
@@ -39,6 +44,10 @@ public class Game extends JavaPlugin implements Listener {
 	private boolean needsUpdate = false;
 	private boolean hasPlaceholderAPI = false;
 	private boolean hasWorldGuard = false;
+
+    private Map<Player, String> tradCache;
+
+
 	
 	@Override
 	public void onEnable() {
@@ -47,8 +56,11 @@ public class Game extends JavaPlugin implements Listener {
 		instance = this;
 		resources = new Resources(this);
 		prefix = resources.getMessages().fetchString("Messages.General.Prefix");
+        defaulLang = resources.defaultLang;
 		database = new Infobase(this);
 		arena = new Arena(this, resources);
+
+        tradCache = new ConcurrentHashMap<>();
 
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(this, this);
@@ -102,7 +114,26 @@ public class Game extends JavaPlugin implements Listener {
 		Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &aDone!");
 	}
 
-	private void populateUUIDCacheForOnlinePlayers() {
+    public void setPlayerLanguage(Player player, String lang) {
+        if (player != null && lang != null) {
+            tradCache.put(player, lang);
+        }
+    }
+
+    public String getPlayerLanguage(CommandSender sender) {
+        if (sender == null) return null;
+        if (!(sender instanceof Player)) return defaulLang;
+        Player player = (Player) sender;
+        return tradCache.get(player);
+    }
+
+    public String getPlayerLanguage(Player player) {
+        if (player == null) return null;
+        return tradCache.get(player);
+    }
+
+
+    private void populateUUIDCacheForOnlinePlayers() {
 		// populates UUID cache if there are players online when doing /reload to avoid a lot of errors related
 		// to database and UUIDs
 		if (Bukkit.getOnlinePlayers().size() > 0) {

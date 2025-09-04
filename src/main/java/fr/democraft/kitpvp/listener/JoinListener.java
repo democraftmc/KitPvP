@@ -7,6 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+
 import fr.democraft.kitpvp.Game;
 import fr.democraft.kitpvp.game.Arena;
 import fr.democraft.kitpvp.util.Toolkit;
@@ -26,6 +30,28 @@ public class JoinListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
+
+        LuckPerms luckPerms = LuckPermsProvider.get();
+        User user = luckPerms.getUserManager().getUser(p.getUniqueId());
+        if (user == null) {
+            luckPerms.getUserManager().loadUser(p.getUniqueId()).thenAccept(
+                    loaded -> {
+                        String metaValue = loaded.getCachedData().getMetaData().getMetaValue("lang.id");
+                        if (metaValue != null && !metaValue.isEmpty()) {
+                            plugin.setPlayerLanguage(p, metaValue);
+                        } else {
+                            plugin.setPlayerLanguage(p, "en");
+                        }
+                    }
+            );
+        } else {
+            String metaValue = user.getCachedData().getMetaData().getMetaValue("lang.id");
+            if (metaValue != null && !metaValue.isEmpty()) {
+                plugin.setPlayerLanguage(p, metaValue);
+            } else {
+                plugin.setPlayerLanguage(p, "en");
+            }
+        }
 
 		// Update checker
 		if (plugin.needsUpdate()) {

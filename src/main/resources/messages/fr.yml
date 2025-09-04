@@ -1,0 +1,73 @@
+Messages:
+  General:
+    Prefix: '&7[&b&lFFA&7]'
+    Permission: '%prefix% &cVous n''avez pas la permission (%permission%).'
+    Player: '%prefix% &cVous devez être un joueur pour effectuer cette action.'
+  Commands:
+    Create: '%prefix% &7Le kit &b%kit% &7a été créé avec succès.'
+    Delete: '%prefix% &7Le kit &b%kit% &7a été supprimé avec succès.'
+    Kit: '%prefix% &7Vous avez sélectionné le kit &b%kit%&7.'
+    KitOther: '%prefix% &7Tentative d''attribution du kit &b%kit% &7au joueur &b%player%&7.'
+    Kits: '%prefix% &bKits (sensibles à la casse): &7%kits%'
+    Teleport: '%prefix% &7Téléportation au spawn...'
+    Teleporting: '%prefix% &7Téléportation en cours, ne bougez pas...'
+    Time: '%prefix% &7Téléportation dans &b%time% secondes&7.'
+    Added: '%prefix% &7Spawn &b#%number% &7ajouté avec succès dans l''arène &b%arena%&7.'
+    Removed: '%prefix% &7Arène &b%arena% &7supprimée avec succès.'
+    Reload: '%prefix% &7Configuration, messages et kits rechargés avec succès.'
+    Cleared: '%prefix% &7Votre kit a été effacé.'
+    ClearedOther: '%prefix% &7Vous avez effacé le kit de &b%player%&7.'
+    SetStats: '%prefix% &7Statistiques de &b%player% &7mises à jour: &b%amount% %type%&7.'
+  Other:
+    Needed: '%prefix% &cNiveau &b%level% &crequis pour utiliser ce kit.'
+    Level: '%prefix% &7Félicitations ! Vous êtes maintenant au &bNiveau %level%&7.'
+    Sign: '%prefix% &7Pancréte créée avec succès.'
+    Players: '%prefix% &cAucun autre joueur avec un kit n''est en ligne.'
+    NoKit: Aucun
+    PreviewMenuTitle: '&f'
+    PreviewMenuBedrockTitle: 'Aperçu : %kit%'
+    RefillMenuTitle: '&f'
+    RefillMenuBedrockTitle: 'Refill Menu'
+    PreviewMenuBackArrowItemName: '&cRetour aux Kits'
+    PreviewMenuPotionEffectsItemName: '&a&lEffets de potion'
+    OverflowItemsDropped: '%prefix% &b%number% &7objets du kit ont été jetés au sol
+      (inventaire plein).'
+  Error:
+    Player: '%prefix% &cVous devez cliquer droit sur un joueur pour activer cette
+      capacité.'
+    Arena: '%prefix% &cAucune arène nommée &b%arena% &cnexiste.'
+    ExistsArena: '%prefix% &cL''arène spécifiée n''existe pas.'
+    Exists: '%prefix% &cCe kit existe déjà.'
+    Lost: '%prefix% &cKit introuvable ! Les noms sont sensibles à la casse !'
+    Arguments: '%prefix% &cVeuillez spécifier plus d''arguments dans la commande.'
+    Kit: '%prefix% &cVous devez sélectionner un kit avant d''attaquer des joueurs.'
+    Moved: '%prefix% &cVous avez bougé, téléportation annulée.'
+    Invincible: '%prefix% &cVous ne pouvez pas attaquer ce joueur car il n''a pas
+      de kit.'
+    Selected: '%prefix% &cVous avez déjà sélectionné un kit.'
+    SelectedOther: '%prefix% &cCe joueur a déjà sélectionné un kit.'
+    Location: '%prefix% &cVous n''êtes pas dans l''arène pour effectuer cette action.'
+    KitInvalid: '%prefix% &cAction impossible avec un kit sélectionné.'
+    CooldownKit: '%prefix% &cVous devez attendre &b%cooldown% &cavant de choisir ce
+      kit.'
+    CooldownAbility: '%prefix% &cVous devez attendre &b%cooldown% &cavant d''utiliser
+      cette capacité.'
+    Offline: '%prefix% &cJoueur introuvable.'
+    Menu: '%prefix% &cÉchec d''ajout au menu (peut-être plein).'
+    PVP: '%prefix% &cPVP interdit dans cette zone.'
+    InvalidType: '%prefix% &cType invalide &b%type%&c. Types disponibles : &b%types%&c.'
+    InvalidNumber: '%prefix% &cNombre invalide &b%number%&c.'
+    OverflowItemsLost: '%prefix% &c%number% objets n''ont pas pu être stockés et ont
+      été perdus.'
+    InvalidKitName: '%prefix% &cNom de kit invalide (caractères + ou - interdits).'
+  Stats:
+    Message:
+    - '&7&m                                &r'
+    - ' '
+    - ' &b&lStatistiques de %player%'
+    - ' &aNiveau : &7%level%/%max_level%'
+    - ' &aExpérience : &7%xp%/%max_xp%'
+    - ' &aTués : &7%kills%'
+    - ' &aMorts : &7%deaths%'
+    - ' '
+    - '&7&m                                &r'

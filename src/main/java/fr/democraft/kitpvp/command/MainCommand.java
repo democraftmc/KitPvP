@@ -32,14 +32,12 @@ public class MainCommand implements CommandExecutor {
     private final Arena arena;
     private final Resources resources;
     private final Resource config;
-    private final Resource messages;
 
     public MainCommand(Game game) {
         this.plugin = game;
         this.arena = game.getArena();
         this.resources = game.getResources();
         this.config = resources.getConfig();
-        this.messages = resources.getMessages();
     }
 
     @Override
@@ -167,7 +165,7 @@ public class MainCommand implements CommandExecutor {
             }
 
         } else {
-            sender.sendMessage(messages.fetchString("Messages.General.Player"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.General.Player"));
             return true;
         }
 
@@ -214,7 +212,7 @@ public class MainCommand implements CommandExecutor {
         arena.getMenus().getKitMenu().rebuildCache();
         arena.getAbilities().rebuildCache();
 
-        sender.sendMessage(messages.fetchString("Messages.Commands.Reload"));
+        sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.Reload"));
     }
 
     private void executeDebugCommand(CommandSender sender) {
@@ -252,7 +250,7 @@ public class MainCommand implements CommandExecutor {
 
         message = message.substring(0, message.length() - 2);
 
-        sender.sendMessage(messages.fetchString("Messages.Commands.Kits").replace("%kits%", message));
+        sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.Kits").replace("%kits%", message));
     }
 
     private void executeClearCommandOther(CommandSender sender, String[] args) {
@@ -263,12 +261,12 @@ public class MainCommand implements CommandExecutor {
         if (target != null && Toolkit.inArena(target)) {
             clearKit(target);
 
-            target.sendMessage(messages.fetchString("Messages.Commands.Cleared"));
-            sender.sendMessage(messages.fetchString("Messages.Commands.ClearedOther")
+            target.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.Cleared"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.ClearedOther")
                     .replace("%player%", target.getName()));
 
         } else {
-            sender.sendMessage(messages.fetchString("Messages.Error.Offline"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.Offline"));
         }
     }
 
@@ -277,10 +275,10 @@ public class MainCommand implements CommandExecutor {
 
         if (arena.getKits().isKit(kitName)) {
             arena.getKits().deleteKit(kitName);
-            sender.sendMessage(messages.fetchString("Messages.Commands.Delete")
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.Delete")
                     .replace("%kit%", kitName));
         } else {
-            sender.sendMessage(messages.fetchString("Messages.Error.Lost"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.Lost"));
         }
     }
 
@@ -290,7 +288,7 @@ public class MainCommand implements CommandExecutor {
         if (plugin.getDatabase().isPlayerRegistered(targetName)) {
             sendStatsMessage(sender, targetName);
         } else {
-            sender.sendMessage(messages.fetchString("Messages.Error.Offline"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.Offline"));
         }
     }
 
@@ -302,13 +300,13 @@ public class MainCommand implements CommandExecutor {
 
         if (target != null && Toolkit.inArena(target)) {
             Kit kitToGive = arena.getKits().getKitByName(kitName);
-            sender.sendMessage(messages.fetchString("Messages.Commands.KitOther")
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.KitOther")
                     .replace("%player%", playerName)
                     .replace("%kit%", kitName));
 
             arena.getKits().attemptToGiveKitToPlayer(target, kitToGive);
         } else {
-            sender.sendMessage(messages.fetchString("Messages.Error.Offline"));
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.Offline"));
         }
     }
 
@@ -320,27 +318,27 @@ public class MainCommand implements CommandExecutor {
         if (isValidStatIdentifier(statsIdentifier, true)) {
 
             if (!StringUtils.isNumeric(possibleAmount)) {
-                sender.sendMessage(resources.getMessages().fetchString("Messages.Error.InvalidNumber")
+                sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.InvalidNumber")
                         .replace("%number%", possibleAmount));
             }
 
             String playerUUID = plugin.getDatabase().usernameToUUID(playerName);
 
             if (playerUUID == null) {
-                sender.sendMessage(resources.getMessages().fetchString("Messages.Error.Offline"));
+                sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.Offline"));
             }
 
             int amount = Integer.parseInt(possibleAmount);
             arena.getStats().setStat(statsIdentifier, playerName, amount);
             arena.getStats().pushCachedStatsToDatabase(playerName, false);
 
-            sender.sendMessage(resources.getMessages().fetchString("Messages.Commands.SetStats")
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Commands.SetStats")
                     .replace("%player%", playerName)
                     .replace("%amount%", String.valueOf(amount))
                     .replace("%type%", statsIdentifier));
 
         } else {
-            sender.sendMessage(resources.getMessages().fetchString("Messages.Error.InvalidType")
+            sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.Error.InvalidType")
                     .replace("%type%", statsIdentifier)
                     .replace("%types%", "kills, deaths, level, experience"));
         }
@@ -356,7 +354,7 @@ public class MainCommand implements CommandExecutor {
 
     private void executeSpawnCommand(Player p) {
         if (!config.contains("Arenas." + p.getWorld().getName())) {
-            p.sendMessage(messages.fetchString("Messages.Error.Arena")
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Arena")
                     .replace("%arena%", p.getWorld().getName()));
             return;
         }
@@ -365,7 +363,7 @@ public class MainCommand implements CommandExecutor {
             return;
         }
 
-        p.sendMessage(messages.fetchString("Messages.Commands.Teleporting"));
+        p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Teleporting"));
         spawnUsers.add(p.getName());
         Toolkit.playSoundToPlayer(p, "ENTITY_ITEM_PICKUP", -1);
 
@@ -380,14 +378,14 @@ public class MainCommand implements CommandExecutor {
 
                 if (time != 0) {
                     if (p.getGameMode() != GameMode.SPECTATOR) {
-                        p.sendMessage(messages.fetchString("Messages.Commands.Time")
+                        p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Time")
                                 .replace("%time%", String.valueOf(time)));
                         Toolkit.playSoundToPlayer(p, "BLOCK_NOTE_BLOCK_SNARE", 1);
 
                         if (beforeLocation.getBlockX() != p.getLocation().getBlockX() ||
                                 beforeLocation.getBlockY() != p.getLocation().getBlockY() ||
                                 beforeLocation.getBlockZ() != p.getLocation().getBlockZ()) {
-                            p.sendMessage(messages.fetchString("Messages.Error.Moved"));
+                            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Moved"));
                             spawnUsers.remove(p.getName());
                             cancel();
                         }
@@ -396,7 +394,7 @@ public class MainCommand implements CommandExecutor {
                         cancel();
                     }
                 } else {
-                    p.sendMessage(messages.fetchString("Messages.Commands.Teleport"));
+                    p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Teleport"));
 
                     arena.toSpawn(p, p.getWorld().getName());
 
@@ -414,7 +412,7 @@ public class MainCommand implements CommandExecutor {
 
     private void executeClearCommandSelf(Player p) {
         clearKit(p);
-        p.sendMessage(messages.fetchString("Messages.Commands.Cleared"));
+        p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Cleared"));
     }
 
     private void executeAddSpawnCommand(Player p) {
@@ -424,7 +422,7 @@ public class MainCommand implements CommandExecutor {
 
         Toolkit.saveLocationToResource(config, "Arenas." + arenaName + "." + spawnNumber, p.getLocation());
 
-        p.sendMessage(messages.fetchString("Messages.Commands.Added")
+        p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Added")
                 .replace("%number%", String.valueOf(spawnNumber))
                 .replace("%arena%", arenaName));
         Toolkit.playSoundToPlayer(p, "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR", 1);
@@ -437,10 +435,10 @@ public class MainCommand implements CommandExecutor {
             config.set("Arenas." + arenaName, null);
             plugin.saveConfig();
 
-            p.sendMessage(messages.fetchString("Messages.Commands.Removed").replace("%arena%", arenaName));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Removed").replace("%arena%", arenaName));
             Toolkit.playSoundToPlayer(p, "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR", 1);
         } else {
-            p.sendMessage(messages.fetchString("Messages.Error.Arena"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Arena"));
         }
     }
 
@@ -449,7 +447,7 @@ public class MainCommand implements CommandExecutor {
 
         if (resources.getConfig().getBoolean("Arena.PreventArenaSignUseWithKit")) {
             if (arena.getKits().playerHasKit(p.getName())) {
-                p.sendMessage(messages.fetchString("Messages.Error.KitInvalid"));
+                p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.KitInvalid"));
                 return;
             }
         }
@@ -464,7 +462,7 @@ public class MainCommand implements CommandExecutor {
             Kit kitToPreview = arena.getKits().getKitByName(kitName);
             arena.getMenus().getPreviewMenu().open(p, kitToPreview, resources);
         } else {
-            p.sendMessage(messages.fetchString("Messages.Error.Lost"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Lost"));
         }
     }
 
@@ -472,17 +470,17 @@ public class MainCommand implements CommandExecutor {
         String kitName = args[1];
 
         if (!validateKitName(kitName)) {
-            p.sendMessage(messages.fetchString("Messages.Error.InvalidKitName"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.InvalidKitName"));
             return;
         }
 
         if (!arena.getKits().isKit(kitName)) {
             arena.getKits().createKit(p, kitName);
 
-            p.sendMessage(messages.fetchString("Messages.Commands.Create")
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Commands.Create")
                     .replace("%kit%", kitName));
         } else {
-            p.sendMessage(messages.fetchString("Messages.Error.Exists"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Exists"));
         }
     }
 
@@ -493,7 +491,7 @@ public class MainCommand implements CommandExecutor {
 
             arena.getKits().attemptToGiveKitToPlayer(p, kitToGive);
         } else {
-            p.sendMessage(messages.fetchString("Messages.Error.Location"));
+            p.sendMessage(resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("message.Error.Location"));
         }
     }
 
@@ -502,7 +500,7 @@ public class MainCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(messages.fetchString("Messages.General.Permission")
+        sender.sendMessage(resources.getMessages(plugin.getPlayerLanguage(sender)).fetchString("message.General.Permission")
                 .replace("%permission%", permission));
         return false;
     }
@@ -528,7 +526,7 @@ public class MainCommand implements CommandExecutor {
     }
 
     private void sendStatsMessage(CommandSender receiver, String username) {
-        for (String line : messages.getStringList("Messages.Stats.Message")) {
+        for (String line : resources.getMessages(plugin.getPlayerLanguage(Toolkit.getPlayer(username))).getStringList("message.Stats.Message")) {
             receiver.sendMessage(arena.getUtilities().replaceBuiltInPlaceholdersIfPresent(line, username));
         }
     }

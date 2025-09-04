@@ -3,6 +3,7 @@ package fr.democraft.kitpvp.listener;
 import fr.democraft.kitpvp.Game;
 import fr.democraft.kitpvp.game.Arena;
 import fr.democraft.kitpvp.util.Resource;
+import fr.democraft.kitpvp.util.Resources;
 import fr.democraft.kitpvp.util.Toolkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
@@ -21,17 +22,19 @@ import java.util.List;
 public class SignListener implements Listener {
 
 	private final Arena arena;
-	private final Resource messages;
+	private final Resources messages;
 	private final Resource signs;
 	private final List<String> regularSignTypes;
 	private final List<String> customSignTypes;
+    private final Game plugin;
 
-	public SignListener(Game plugin) {
+    public SignListener(Game plugin) {
 		this.arena = plugin.getArena();
-		this.messages = plugin.getResources().getMessages();
+		this.messages = plugin.getResources();
 		this.signs = plugin.getResources().getSigns();
 		this.regularSignTypes = new ArrayList<>(Arrays.asList("clear", "menu", "stats", "refill"));
 		this.customSignTypes = new ArrayList<>(Arrays.asList("kit", "arena"));
+        this.plugin = plugin;
 	}
 	
 	@EventHandler
@@ -42,12 +45,12 @@ public class SignListener implements Listener {
 
 			if (regularSignTypes.contains(signType)) {
 				renameSign(e, "Signs." + Toolkit.capitalizeFirstChar(signType), null, null);
-				p.sendMessage(messages.fetchString("Messages.Other.Sign"));
+				p.sendMessage(messages.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Other.Sign"));
 			} else if (customSignTypes.contains(signType)) {
 				String placeholderKey = "%" + signType + "%";
 				String placeholderValue = e.getLine(2);
 				renameSign(e, "Signs." + Toolkit.capitalizeFirstChar(signType), placeholderKey, placeholderValue);
-				p.sendMessage(messages.fetchString("Messages.Other.Sign"));
+				p.sendMessage(messages.getMessages(plugin.getPlayerLanguage(p)).fetchString("Messages.Other.Sign"));
 			}
 		}
 	}

@@ -16,10 +16,12 @@ public class AttackListener implements Listener {
 
 	private final Resources resources;
 	private final Kits kits;
+    private final Game plugin;
 
-	public AttackListener(Game plugin) {
+    public AttackListener(Game plugin) {
 		this.resources = plugin.getResources();
 		this.kits = plugin.getArena().getKits();
+        this.plugin = plugin;
 	}
 	
 	@EventHandler
@@ -31,12 +33,12 @@ public class AttackListener implements Listener {
 			if (Toolkit.inArena(damagedPlayer) && !damagedPlayer.hasMetadata("NPC")) {
 				if (resources.getConfig().getBoolean("Arena.NoKitProtection")) {
 					if (!kits.playerHasKit(damagedPlayer.getName())) {
-						damager.sendMessage(resources.getMessages().fetchString("Messages.Error.Invincible"));
+						damager.sendMessage(resources.getMessages(plugin.getPlayerLanguage(damager)).fetchString("Messages.Error.Invincible"));
 						e.setCancelled(true);
 					}
 					
 					if (kits.playerHasKit(damagedPlayer.getName()) && !kits.playerHasKit(damager.getName())) {
-						damager.sendMessage(resources.getMessages().fetchString("Messages.Error.Kit"));
+						damager.sendMessage(resources.getMessages(plugin.getPlayerLanguage(damager)).fetchString("Messages.Error.Kit"));
 						e.setCancelled(true);
 					}
 				}
