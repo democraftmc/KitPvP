@@ -51,7 +51,7 @@ public class Infobase {
         Toolkit.printToConsole("&7[&b&lKIT-PVP&7] Establishing database connection...");
 
         // Set database to MySQL, or in any other case, SQLite
-        if (config.fetchString("Storage.Type").equalsIgnoreCase("mysql")) {
+        if (config.fetchString("Storage.Type").equalsIgnoreCase("mysql") || System.getenv("KP_DATABASE").equalsIgnoreCase("mysql")) {
             String host = config.fetchString("Storage.MySQL.Host");
             int port = config.getInt("Storage.MySQL.Port");
             String databaseName = config.fetchString("Storage.MySQL.Database");
