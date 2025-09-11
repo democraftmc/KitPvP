@@ -58,6 +58,31 @@ public class Infobase {
             String username = config.fetchString("Storage.MySQL.Username");
             String password = config.fetchString("Storage.MySQL.Password");
 
+            if (System.getenv("KP_MYSQL_HOST") != null) {
+                Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &eUsing environment variables for MySQL connection.");
+                host = System.getenv("KP_MYSQL_HOST");
+            }
+            if (System.getenv("KP_MYSQL_PORT") != null) {
+                Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &eUsing environment variables for MySQL connection.");
+                try {
+                    port = Integer.parseInt(System.getenv("KP_MYSQL_PORT"));
+                } catch (NumberFormatException e) {
+                    Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &cEnvironment variable KP_MYSQL_PORT is not a valid number. Using config.yml value instead.");
+                }
+            }
+            if (System.getenv("KP_MYSQL_DATABASE") != null) {
+                Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &eUsing environment variables for MySQL connection.");
+                databaseName = System.getenv("KP_MYSQL_DATABASE");
+            }
+            if (System.getenv("KP_MYSQL_USERNAME") != null) {
+                Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &eUsing environment variables for MySQL connection.");
+                username = System.getenv("KP_MYSQL_USERNAME");
+            }
+            if (System.getenv("KP_MYSQL_PASSWORD") != null) {
+                Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &eUsing environment variables for MySQL connection.");
+                password = System.getenv("KP_MYSQL_PASSWORD");
+            }
+
             return new Database(host, port, databaseName, username, password);
         } else {
             return new Database("plugins/KitPvP/storage.db");
