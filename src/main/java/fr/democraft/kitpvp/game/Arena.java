@@ -150,6 +150,7 @@ public class Arena {
 				ItemMeta meta = item.getItemMeta();
 
 				meta.setDisplayName(config.fetchString(itemPath + ".Name"));
+                meta.setLore(config.getStringList(itemPath + ".Lore"));
 				item.setItemMeta(meta);
 
 				p.getInventory().setItem(config.getInt(itemPath + ".Slot"), item);

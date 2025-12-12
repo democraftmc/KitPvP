@@ -67,7 +67,8 @@ public class Kit {
     }
 
     public void addEffect(PotionEffectType type, int amplifierNonZeroBased, int durationSeconds) {
-        PotionEffect effect = new PotionEffect(type, durationSeconds * 20, amplifierNonZeroBased - 1);
+        PotionEffect effect = new PotionEffect(type, Toolkit.parsePotionEffectDuration(durationSeconds),
+                amplifierNonZeroBased - 1);
         effects.add(effect);
     }
 

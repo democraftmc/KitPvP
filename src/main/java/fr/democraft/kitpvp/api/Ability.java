@@ -47,8 +47,8 @@ public class Ability {
         this.soundVolume = volume;
     }
 
-    public void addEffect(PotionEffectType type, int amplifier, int durationSeconds) {
-        PotionEffect effect = new PotionEffect(type, durationSeconds * 20, amplifier - 1);
+    public void addEffect(PotionEffectType type, int amplifierNonZeroBased, int durationSeconds) {
+        PotionEffect effect = new PotionEffect(type, Toolkit.parsePotionEffectDuration(durationSeconds), amplifierNonZeroBased - 1);
         effects.add(effect);
     }
 
