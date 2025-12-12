@@ -118,5 +118,8 @@ public class Resource extends YamlConfiguration {
 	public String getName() { return name; }
 	
 	public File getFile() { return file; }
-	
+
+    public int fetchInt(String s) {
+        return super.getInt(path);
+    }
 }

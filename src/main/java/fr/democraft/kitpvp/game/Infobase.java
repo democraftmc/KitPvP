@@ -49,11 +49,15 @@ public class Infobase {
 
     private Database setupDatabase(Resource config) {
         Toolkit.printToConsole("&7[&b&lKIT-PVP&7] Establishing database connection...");
-
+        String databaseType = System.getenv("KP_DATABASE");
+        if (databaseType == null) {
+            databaseType = config.fetchString("Storage.Type");
+        }
         // Set database to MySQL, or in any other case, SQLite
-        if (config.fetchString("Storage.Type").equalsIgnoreCase("mysql") || System.getenv("KP_DATABASE").equalsIgnoreCase("mysql")) {
+        if (databaseType.equalsIgnoreCase("mysql")) {
+            plugin.getLogger().info("Using MySQL database for storage.");
             String host = config.fetchString("Storage.MySQL.Host");
-            int port = config.getInt("Storage.MySQL.Port");
+            int port = config.fetchInt("Storage.MySQL.Port");
             String databaseName = config.fetchString("Storage.MySQL.Database");
             String username = config.fetchString("Storage.MySQL.Username");
             String password = config.fetchString("Storage.MySQL.Password");
@@ -85,6 +89,7 @@ public class Infobase {
 
             return new Database(host, port, databaseName, username, password);
         } else {
+            plugin.getLogger().info("Using SQLite database for storage.");
             return new Database("plugins/KitPvP/storage.db");
         }
     }

@@ -41,7 +41,15 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+tasks.named('jar') {
+    // Disable the plain jar task so we don't accidentally deploy a jar without shaded dependencies
+    enabled = false
+}
+
 tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    // Produce the shadow jar as the main artifact (remove the default '-all' classifier)
+    archiveClassifier.set('')
+
     relocate 'com.cryptomorin.xseries', 'com.planetgallium.kitpvp'
     relocate 'com.mysql', 'com.planetgallium.sql'
     exclude 'com/cryptomorin/xseries/messages/ActionBar*'
