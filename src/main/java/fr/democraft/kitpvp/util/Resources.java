@@ -198,6 +198,10 @@ public class Resources {
 
     public Collection<Resource> getAbilityResources() { return abilityToResource.values(); }
 
+    public Collection<Resource> getLangRessources() {
+        return messageResources.values();
+    }
+
     public Resource getMessageFile(String langId) {
         return messageResources.get(langId);
     }

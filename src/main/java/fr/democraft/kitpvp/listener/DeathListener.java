@@ -117,8 +117,8 @@ public class DeathListener implements Listener {
 				public void run() {
 					if (time != 0) {
 						Titles.sendTitle(victim, 0, 21, 0,
-								config.fetchString("Death.Title.Title"),
-								config.fetchString("Death.Title.Subtitle")
+                                resources.getMessages(plugin.getPlayerLanguage(victim)).fetchString("Death.Title.Title"),
+                                resources.getMessages(plugin.getPlayerLanguage(victim)).fetchString("Death.Title.Subtitle")
 										.replace("%seconds%", String.valueOf(time)));
 						Toolkit.playSoundToPlayer(victim, "UI_BUTTON_CLICK", 1);
 						time--;
@@ -127,7 +127,7 @@ public class DeathListener implements Listener {
 
 						arena.addPlayer(victim, true, config.getBoolean("Arena.GiveItemsOnRespawn"));
 
-						victim.sendMessage(config.fetchString("Death.Title.Message"));
+						victim.sendMessage(resources.getMessages(plugin.getPlayerLanguage(victim)).fetchString("Death.Title.Message"));
 						victim.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0));
 						Toolkit.playSoundToPlayer(victim, "ENTITY_EXPERIENCE_ORB_PICKUP", 1);
 
@@ -164,7 +164,7 @@ public class DeathListener implements Listener {
 
 	private void setDeathMessage(Player victim) {
 		if (victim.getLastDamageCause() == null) {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Unknown"));
+			broadcast(victim.getWorld(), "Unknown", victim);
 			return;
 		}
 
@@ -173,7 +173,7 @@ public class DeathListener implements Listener {
 		if (cause == DamageCause.PROJECTILE && getShooter(victim.getLastDamageCause()).getType() == EntityType.PLAYER) {
 			Player killer = (Player) getShooter(victim.getLastDamageCause());
 
-			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Shot"));
+			broadcast(victim.getWorld(),"Shot", victim, killer);
 			creditWithKill(victim, killer);
 
 //		} else if (cause == DamageCause.ENTITY_ATTACK) {
@@ -184,14 +184,14 @@ public class DeathListener implements Listener {
 		} else if (victim.getKiller() != null) {
 			Player killer = victim.getKiller();
 
-			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
+			broadcast(victim.getWorld(), "Player", victim, killer);
 			creditWithKill(victim, killer);
 
 		} else if (arena.getHitCache().get(victim.getName()) != null) {
 			String killerName = arena.getHitCache().get(victim.getName());
 			Player killer = Toolkit.getPlayer(victim.getWorld(), killerName);
 
-			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
+			broadcast(victim.getWorld(), "Player", victim, killer);
 			creditWithKill(victim, killer);
 
 		} else if ((cause == DamageCause.BLOCK_EXPLOSION || cause == DamageCause.ENTITY_EXPLOSION) &&
@@ -199,23 +199,23 @@ public class DeathListener implements Listener {
 			String bomberName = getExplodedEntity(victim.getLastDamageCause()).getCustomName();
 			Player killer = Toolkit.getPlayer(victim.getWorld(), bomberName);
 
-			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
+			broadcast(victim.getWorld(), "Player", victim);
 			creditWithKill(victim, killer);
 
 		} else if (cause == DamageCause.VOID) {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Void"));
+			broadcast(victim.getWorld(), "Void", victim);
 
 		} else if (cause == DamageCause.FALL) {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Fall"));
+			broadcast(victim.getWorld(),  "Fall", victim);
 
 		} else if (cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK || cause == DamageCause.LAVA) {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Fire"));
+			broadcast(victim.getWorld(), "Fire", victim);
 
 		} else if (cause == DamageCause.BLOCK_EXPLOSION || cause == DamageCause.ENTITY_EXPLOSION) {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Explosion"));
+			broadcast(victim.getWorld(), "Explosion", victim);
 
 		} else {
-			broadcast(victim.getWorld(), getDeathMessage(victim, null, "Unknown"));
+			broadcast(victim.getWorld(), "Unknown", victim);
 
 		}
 	}
@@ -259,12 +259,12 @@ public class DeathListener implements Listener {
 		}
 	}
 
-	private String getDeathMessage(Player victim, Player killer, String type) {
-		String deathMessage = config.fetchString("Death.Messages." + type);
+	private String getDeathMessage(Player context, Player victim, Player killer, String type) {
+		String deathMessage = resources.getMessages(plugin.getPlayerLanguage(context)).fetchString("Death.Messages." + type);
 
 		if (victim != null && killer != null) {
 			if (victim.getName().equals(killer.getName())) {
-				deathMessage = config.fetchString("Death.Messages.Suicide");
+                deathMessage = resources.getMessages(plugin.getPlayerLanguage(context)).fetchString("Death.Messages.Suicide");
 			}
 		}
 
@@ -272,7 +272,7 @@ public class DeathListener implements Listener {
 			deathMessage = deathMessage.replace("%killer%", killer.getName())
 					.replace("%killer_health%", String.valueOf(Toolkit.round(killer.getHealth(), 2)));
 		} else {
-			deathMessage = config.fetchString("Death.Messages.Unknown"); // if killer is null (left the server, or some other unknown reason)
+			deathMessage = resources.getMessages(plugin.getPlayerLanguage(context)).fetchString("Death.Messages.Unknown"); // if killer is null (left the server, or some other unknown reason)
 		}
 
 		if (victim != null) {
@@ -282,13 +282,29 @@ public class DeathListener implements Listener {
 		return deathMessage;
 	}
 
-	private void broadcast(World world, String message) {
+	private void broadcast(World world, String path) {
 		if (config.getBoolean("Death.Messages.Enabled")) {
 			for (Player all : world.getPlayers()) {
-				all.sendMessage(Toolkit.translate(message));
+				all.sendMessage(getDeathMessage(all, all, null, path));
 			}
 		}
 	}
+
+    private void broadcast(World world, String path, Player victim, Player killer) {
+        if (config.getBoolean("Death.Messages.Enabled")) {
+            for (Player all : world.getPlayers()) {
+                all.sendMessage(getDeathMessage(all, victim, killer, path));
+            }
+        }
+    }
+
+    private void broadcast(World world, String path, Player victim) {
+        if (config.getBoolean("Death.Messages.Enabled")) {
+            for (Player all : world.getPlayers()) {
+                all.sendMessage(getDeathMessage(all, victim, null, path));
+            }
+        }
+    }
 
 	private void broadcast(World world, String soundName, int pitch) {
 		if (config.getBoolean("Death.Sound.Enabled")) {

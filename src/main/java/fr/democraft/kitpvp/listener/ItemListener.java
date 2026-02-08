@@ -102,7 +102,7 @@ public class ItemListener implements Listener {
 			if (config.contains("Items.Kits") &&
 					Toolkit.hasMatchingMaterial(interactedItem, config.fetchString("Items.Kits.Material"))) {
 
-				if (Toolkit.hasMatchingDisplayName(interactedItem, config.fetchString("Items.Kits.Name"))) {
+				if (Toolkit.hasMatchingName(interactedItem, "Items.Kits.Name")) {
 					Toolkit.runCommands(p, config.getStringList("Items.Kits.Commands"),
 							"none", "none");
 
@@ -125,7 +125,7 @@ public class ItemListener implements Listener {
 
 					String itemMaterialName = config.fetchString(itemPath + ".Material");
 					if (Toolkit.hasMatchingMaterial(interactedItem, itemMaterialName)) {
-						if (Toolkit.hasMatchingDisplayName(interactedItem, config.fetchString(itemPath + ".Name"))) {
+						if (Toolkit.hasMatchingName(interactedItem, itemPath + ".Name")) {
 							Toolkit.runCommands(p, config.getStringList(itemPath + ".Commands"),
 									"none", "none");
 							e.setCancelled(true);

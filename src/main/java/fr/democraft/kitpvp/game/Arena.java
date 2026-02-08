@@ -148,8 +148,9 @@ public class Arena {
 			if (config.getBoolean(itemPath + ".Enabled")) {
 				ItemStack item = Toolkit.safeItemStack(config.fetchString(itemPath + ".Material"));
 				ItemMeta meta = item.getItemMeta();
-
-				meta.setDisplayName(config.fetchString(itemPath + ".Name"));
+				meta.setDisplayName(
+                        resources.getMessages(plugin.getPlayerLanguage(p)).fetchString("Items." + identifier + ".Name")
+                        );
                 meta.setLore(config.getStringList(itemPath + ".Lore"));
 				item.setItemMeta(meta);
 

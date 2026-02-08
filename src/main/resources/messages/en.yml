@@ -65,3 +65,22 @@ Messages:
     - ' &aDeaths: &7%deaths%'
     - ' '
     - '&7&m                                &r'
+Items:
+  Kits:
+    Name: '&aKit Selector &7(Right Click)'
+  Leave:
+    Name: '&aReturn to Hub &7(Right Click)'
+Death:
+  Title:
+    Title: '&c&lYOU DIED!'
+    Subtitle: '&7You will respawn in %seconds% seconds.'
+    Message: '%prefix% &7Respawning...'
+  Messages:
+    Player: '%prefix% &b%victim% &7was killed by &b%killer% &7(&c%killer_health%&7).'
+    Shot: '%prefix% &b%victim% &7was shot by &b%killer% &7(&c%killer_health%&7).'
+    Fall: '%prefix% &b%victim% &7fell to their doom.'
+    Void: '%prefix% &b%victim% &7died from the void.'
+    Fire: '%prefix% &b%victim% &7died from fire.'
+    Explosion: '%prefix% &b%victim% &7blew up.'
+    Suicide: '%prefix% &b%victim% &7killed themselves.'
+    Unknown: '%prefix% &b%victim% &7died.'

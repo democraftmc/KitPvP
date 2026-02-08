@@ -167,23 +167,12 @@ public class AttributeParser {
         }
     }
 
-    private static void setUnbreakable(ItemStack item) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        if (Toolkit.versionToNumber() <= 114) {
-            ItemMeta meta = item.getItemMeta();
+    private static void setUnbreakable(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
 
-            Method spigotMethod = meta.getClass().getMethod("spigot");
-            spigotMethod.setAccessible(true);
-
-            Object spigotInstance = spigotMethod.invoke(meta);
-            Class spigotClass = spigotInstance.getClass();
-
-            Method setUnbreakableMethod = spigotClass.getDeclaredMethod("setUnbreakable", boolean.class);
-            setUnbreakableMethod.setAccessible(true);
-
-            setUnbreakableMethod.invoke(spigotInstance, true);
-        } else if (Toolkit.versionToNumber() > 114) {
-            item.getItemMeta().setUnbreakable(true);
-        }
+        meta.setUnbreakable(true);
+        item.setItemMeta(meta);
     }
 
     private static ItemStack setEffectsFromPath(ItemStack item, Resource resource, String path) {

@@ -302,6 +302,21 @@ public class Toolkit {
 		return false;
 	}
 
+    public static boolean hasMatchingName(ItemStack item, String targetDisplayName) {
+        ItemMeta meta = item.getItemMeta();
+
+        if (item.hasItemMeta() && meta != null) {
+            for (Resource lang : Game.getInstance().getResources().getLangRessources()) {
+                if (Toolkit.translate(meta.getDisplayName()).equals(
+                        lang.fetchString( targetDisplayName))) {
+                    return true;
+                }
+            }
+            return meta.hasDisplayName() && Toolkit.translate(meta.getDisplayName()).equals(targetDisplayName);
+        }
+        return false;
+    }
+
 	public static boolean hasMatchingMaterial(ItemStack item, String targetMaterial) {
 		return item.getType() == Toolkit.safeMaterial(targetMaterial);
 	}

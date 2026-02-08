@@ -71,3 +71,23 @@ Messages:
     - ' &aMorts : &7%deaths%'
     - ' '
     - '&7&m                                &r'
+
+Items:
+  Kits:
+    Name: '&aKits &7(Clic droit)'
+  Leave:
+    Name: '&aRetour au Hub &7(Clic droit)'
+Death:
+  Title:
+    Title: '&c&lTU ES MORT!'
+    Subtitle: '&7Tu va réaparaitre dans %seconds% secondes.'
+    Message: '%prefix% &7Réaparition...'
+  Messages:
+    Player: '%prefix% &b%victim% &7a été tué par &b%killer% &7(&c%killer_health%&7).'
+    Shot: '%prefix% &b%victim% &7est mort d''un tir de &b%killer% &7(&c%killer_health%&7).'
+    Fall: '%prefix% &b%victim% &7s''est écrasé sur le sol.'
+    Void: '%prefix% &b%victim% &7est mort dans le vide.'
+    Fire: '%prefix% &b%victim% &7a pris un peu trop feu.'
+    Explosion: '%prefix% &b%victim% &7a explosé.'
+    Suicide: '%prefix% &b%victim% &7s''est suicidé. bruh...'
+    Unknown: '%prefix% &b%victim% &7est mort.'
